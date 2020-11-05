@@ -1,7 +1,7 @@
 # NIT-C Registration backend
 ## Progress
 #### User
-- [ ] /api/user/login 
+- [x] /api/user/login 
 - [ ] /api/user/update
 - [ ] /api/user/forgot-password
 - [ ] /api/user/reset-password
