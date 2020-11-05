@@ -7,11 +7,10 @@ import { UserService } from '../../user/service/user.service';
 
 @Injectable()
 export class ApplicationService {
-
   constructor(
-    @InjectRepository(ApplicationEntity) private readonly applicationRepository: Repository<ApplicationEntity>,
+    @InjectRepository(ApplicationEntity)
+    private readonly applicationRepository: Repository<ApplicationEntity>,
     private authService: AuthService,
     private userService: UserService,
-  ) {
-  }
+  ) {}
 }

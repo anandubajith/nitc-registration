@@ -6,5 +6,5 @@ export interface Application {
 export enum ApplicationStatus {
   PENDING = 'pending',
   SUBMITTED = 'submitted',
-  VERIFIED = 'verified'
+  VERIFIED = 'verified',
 }

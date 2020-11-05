@@ -4,6 +4,8 @@ import { UserService } from '../../user/service/user.service';
 
 @Controller('application')
 export class ApplicationController {
-  constructor(private applicationService: ApplicationService, private userService: UserService) {
-  }
+  constructor(
+    private applicationService: ApplicationService,
+    private userService: UserService,
+  ) {}
 }
