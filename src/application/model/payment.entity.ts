@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  UpdateDateColumn,
+  ManyToOne,
+} from 'typeorm';
 import { UserEntity } from '../../user/model/user.entity';
 import { ApplicationEntity } from './application.entity';
 

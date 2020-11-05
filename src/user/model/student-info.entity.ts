@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class StudentInfoEntity{
+export class StudentInfoEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,5 +19,4 @@ export class StudentInfoEntity{
 
   @Column()
   category: string;
-
 }

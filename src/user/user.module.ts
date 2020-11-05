@@ -7,7 +7,10 @@ import { AuthModule } from 'src/auth/auth.module';
 import { StudentInfoEntity } from './model/student-info.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, StudentInfoEntity]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity, StudentInfoEntity]),
+    AuthModule,
+  ],
   providers: [UserService],
   controllers: [UserController],
   exports: [UserService],

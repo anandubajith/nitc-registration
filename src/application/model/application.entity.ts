@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { ApplicationStatus } from './application.interface';
 import { UserEntity } from '../../user/model/user.entity';
 import { PaymentEntity } from './payment.entity';
@@ -16,10 +23,10 @@ export class ApplicationEntity {
   })
   status: ApplicationStatus;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   submission_date: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   verifiedBy: string;
 
   @UpdateDateColumn({ name: 'updated_at', nullable: true })

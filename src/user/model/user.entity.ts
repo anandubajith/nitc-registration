@@ -3,7 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BeforeInsert,
-  OneToMany, OneToOne, JoinColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { UserRole } from './user.interface';
 import { Application } from '../../application/model/application.interface';
