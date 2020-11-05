@@ -1,8 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from "typeorm";
 import { UserRole } from "./user.interface";
 
-
-
 @Entity()
 export class UserEntity {
 

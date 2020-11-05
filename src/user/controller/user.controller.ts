@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Get, Param, Delete, Put, UseGuards, Query, UseInterceptors, UploadedFile, Request, Res } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { User, UserRole } from '../models/user.interface';
+import { User, UserRole } from '../model/user.interface';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { hasRoles } from 'src/auth/decorators/roles.decorator';

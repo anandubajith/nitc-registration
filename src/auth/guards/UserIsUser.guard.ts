@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, Inject, forwardRef, ExecutionContext } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { UserService } from "src/user/service/user.service";
-import { User } from "src/user/models/user.interface";
+import { User } from "src/user/model/user.interface";
 import { map } from "rxjs/operators";
 
 

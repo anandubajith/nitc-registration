@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../models/user.entity';
+import { UserEntity } from '../model/user.entity';
 import { Repository, Like } from 'typeorm';
-import { User, UserRole } from '../models/user.interface';
+import { User, UserRole } from '../model/user.interface';
 import { Observable, from, throwError } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { AuthService } from 'src/auth/services/auth.service';
