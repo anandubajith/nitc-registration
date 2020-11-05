@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, UpdateDateColumn } from 'typeorm';
-import { ApplicationStatus } from './application.interface';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Application, ApplicationStatus } from './application.interface';
 import { UserEntity } from '../../user/model/user.entity';
+import { PaymentEntity } from './payment.entity';
+import { Payment } from './payment.interface';
 
 @Entity()
 export class ApplicationEntity {
@@ -28,4 +30,10 @@ export class ApplicationEntity {
     user => user.applications,
   )
   applicant: UserEntity;
+
+  @OneToMany(
+    type => PaymentEntity,
+    paymentEntity => paymentEntity.application,
+  )
+  payments: Payment[];
 }

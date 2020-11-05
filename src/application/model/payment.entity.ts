@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { UserEntity } from '../../user/model/user.entity';
+import { ApplicationEntity } from './application.entity';
 
 @Entity()
 export class PaymentEntity {
@@ -20,4 +22,9 @@ export class PaymentEntity {
   updatedAt: Date;
 
   // todo: relate with applciation
+  @ManyToOne(
+    type => ApplicationEntity,
+    application => application.payments,
+  )
+  application: ApplicationEntity;
 }
