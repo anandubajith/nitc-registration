@@ -5,10 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../auth/auth.module';
 import { ApplicationEntity } from './model/application.entity';
 import { UserModule } from '../user/user.module';
+import { PaymentEntity } from './model/payment.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ApplicationEntity]),
+    TypeOrmModule.forFeature([ApplicationEntity, PaymentEntity]),
     UserModule,
     AuthModule,
   ],

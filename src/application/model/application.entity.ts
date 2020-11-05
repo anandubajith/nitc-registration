@@ -16,10 +16,10 @@ export class ApplicationEntity {
   })
   status: ApplicationStatus;
 
-  @Column()
+  @Column({nullable: true})
   submission_date: string;
 
-  @Column()
+  @Column({nullable: true})
   verifiedBy: string;
 
   @UpdateDateColumn({ name: 'updated_at', nullable: true })
