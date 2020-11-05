@@ -3,11 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BeforeInsert,
-  OneToMany,
+  OneToMany, OneToOne, JoinColumn,
 } from 'typeorm';
 import { UserRole } from './user.interface';
 import { Application } from '../../application/model/application.interface';
 import { ApplicationEntity } from '../../application/model/application.entity';
+import { StudentInfoEntity } from './student-info.entity';
 
 @Entity()
 export class UserEntity {
@@ -33,10 +34,14 @@ export class UserEntity {
   profileImage: string;
 
   @OneToMany(
-    type => ApplicationEntity,
+    () => ApplicationEntity,
     applicationEntity => applicationEntity.applicant,
   )
   applications: Application[];
+
+  @OneToOne(() => StudentInfoEntity)
+  @JoinColumn()
+  studentInfoEntity: StudentInfoEntity;
 
   @BeforeInsert()
   emailToLowerCase() {
