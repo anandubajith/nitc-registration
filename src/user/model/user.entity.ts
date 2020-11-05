@@ -32,7 +32,10 @@ export class UserEntity {
   @Column({ nullable: true })
   profileImage: string;
 
-  @OneToMany(type => ApplicationEntity, applicationEntity => applicationEntity.applicant)
+  @OneToMany(
+    type => ApplicationEntity,
+    applicationEntity => applicationEntity.applicant,
+  )
   applications: Application[];
 
   @BeforeInsert()

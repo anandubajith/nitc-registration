@@ -15,8 +15,7 @@ export class ApplicationController {
 
   @UseGuards(JwtAuthGuard, UserIsApplicantGuard)
   @Get(':id')
-  hello(@Param('id') id: number): Observable<Application>{
+  hello(@Param('id') id: number): Observable<Application> {
     return this.applicationService.findOne(id);
   }
-
 }

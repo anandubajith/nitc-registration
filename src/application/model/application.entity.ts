@@ -1,9 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ApplicationStatus } from './application.interface';
 import { UserEntity } from '../../user/model/user.entity';
 
@@ -19,6 +14,9 @@ export class ApplicationEntity {
   })
   status: ApplicationStatus;
 
-  @ManyToOne(type => UserEntity, user => user.applications)
+  @ManyToOne(
+    type => UserEntity,
+    user => user.applications,
+  )
   applicant: UserEntity;
 }

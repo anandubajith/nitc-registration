@@ -17,6 +17,8 @@ export class ApplicationService {
   ) {}
 
   findOne(id: number): Observable<Application> {
-    return from(this.applicationRepository.findOne({id}, {relations: ['applicant']}));
+    return from(
+      this.applicationRepository.findOne({ id }, { relations: ['applicant'] }),
+    );
   }
 }

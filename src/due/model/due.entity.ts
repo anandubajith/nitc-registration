@@ -1,8 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { DueType } from './due.interface';
 
 @Entity()
@@ -24,5 +20,4 @@ export class DueEntity {
     enum: DueType,
   })
   status: DueType;
-
 }
