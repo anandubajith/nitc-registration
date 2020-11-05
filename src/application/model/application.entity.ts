@@ -2,8 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  BeforeInsert,
-  OneToMany, ManyToOne,
+  ManyToOne,
 } from 'typeorm';
 import { ApplicationStatus } from './application.interface';
 import { UserEntity } from '../../user/model/user.entity';

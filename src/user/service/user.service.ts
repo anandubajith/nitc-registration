@@ -5,7 +5,7 @@ import { Repository, Like } from 'typeorm';
 import { User, UserRole } from '../model/user.interface';
 import { Observable, from, throwError } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { AuthService } from 'src/auth/services/auth.service';
+import { AuthService } from 'src/auth/service/auth.service';
 import {
   paginate,
   Pagination,
