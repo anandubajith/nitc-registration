@@ -2,6 +2,7 @@
 ## Progress
 #### User
 - [ ] /api/user/login 
+- [ ] /api/user/update
 - [ ] /api/user/forgot-password
 - [ ] /api/user/reset-password
 #### Application
