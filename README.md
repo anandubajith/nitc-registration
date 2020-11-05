@@ -1,8 +1,20 @@
 # NIT-C Registration backend
 ## Progress
-- [x] User login endpoints
-- [x] Roles endpoints
-- [ ] Application endpoints
+#### User
+- [ ] /api/user/login 
+- [ ] /api/user/forgot-password
+- [ ] /api/user/reset-password
+#### Application
+- [ ] /api/application/submit
+- [ ] /api/application/list
+- [ ] /api/application/:id
+- [ ] /api/application/:id/update
+- [ ] /api/application/:id/status/update
+- [ ] /api/application/:id/status/update
+#### Due
+- [ ] /api/due/list
+- [ ] /api/due/upload
+
 
 ## Installation
 

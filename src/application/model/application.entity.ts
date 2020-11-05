@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, UpdateDateColumn, OneToMany } from 'typeorm';
-import { Application, ApplicationStatus } from './application.interface';
+import { ApplicationStatus } from './application.interface';
 import { UserEntity } from '../../user/model/user.entity';
 import { PaymentEntity } from './payment.entity';
 import { Payment } from './payment.interface';
