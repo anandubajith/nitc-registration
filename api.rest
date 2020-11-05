@@ -16,10 +16,9 @@ Content-Type: application/json
 ### for student to update his/her details, FA name etc
 POST http://localhost:3000/api/users/update
 ### for student -> his application, for FA, Academic -> the applicatons under them
-GET http://localhost:3000/applicatoin
-### for application owner to create
-POST http://localhost:3000/api/application/create
-### for application owner to update [ should revert verification status ]
+GET http://localhost:3000/api/application/0
+Authorization: Bearer {{token}}
+### for application owner to create and update [ revert verification status ]
 POST http://localhost:3000/api/application/update
 ### to verify, reject, waitlist
 POST http://localhost:3000/api/application/status/update

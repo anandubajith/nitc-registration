@@ -6,6 +6,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { UserRole } from './user.interface';
+import { Application } from '../../application/model/application.interface';
+import { ApplicationEntity } from '../../application/model/application.entity';
 
 @Entity()
 export class UserEntity {
@@ -29,6 +31,9 @@ export class UserEntity {
 
   @Column({ nullable: true })
   profileImage: string;
+
+  @OneToMany(type => ApplicationEntity, applicationEntity => applicationEntity.applicant)
+  applications: Application[];
 
   @BeforeInsert()
   emailToLowerCase() {

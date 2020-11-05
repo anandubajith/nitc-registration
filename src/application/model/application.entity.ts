@@ -3,9 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BeforeInsert,
-  OneToMany,
+  OneToMany, ManyToOne,
 } from 'typeorm';
 import { ApplicationStatus } from './application.interface';
+import { UserEntity } from '../../user/model/user.entity';
 
 @Entity()
 export class ApplicationEntity {
@@ -18,4 +19,7 @@ export class ApplicationEntity {
     default: ApplicationStatus.PENDING,
   })
   status: ApplicationStatus;
+
+  @ManyToOne(type => UserEntity, user => user.applications)
+  applicant: UserEntity;
 }
