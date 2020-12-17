@@ -7,7 +7,7 @@ export class DueEntity {
   id: number;
 
   @Column()
-  amount: string;
+  amount: number;
 
   @Column()
   updatedDate: string;
@@ -19,5 +19,5 @@ export class DueEntity {
     type: 'enum',
     enum: DueType,
   })
-  status: DueType;
+  type: DueType;
 }

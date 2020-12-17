@@ -6,15 +6,18 @@ import {
   Delete,
   Put,
   UseGuards,
+  Get,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
-import { UserService } from '../service/user.service';
-import { User, UserRole } from '../model/user.interface';
+import { UserService } from './user.service';
+import { User, UserRole } from './model/user.interface';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { hasRoles } from 'src/auth/decorators/roles.decorator';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { UserIsUserGuard } from 'src/auth/guards/UserIsUser.guard';
+import { hasRoles } from '../auth/decorators/roles.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { UserIsUserGuard } from '../auth/guards/UserIsUser.guard';
 
 @Controller('users')
 export class UserController {
@@ -34,7 +37,17 @@ export class UserController {
       map((jwt: string) => {
         return { access_token: jwt };
       }),
+      catchError(_ => {
+        throw new HttpException('Invalid login', HttpStatus.UNAUTHORIZED);
+      }),
     );
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.USER)
+  userDetails(): string {
+    return 'hi';
   }
 
   // admin can delete?

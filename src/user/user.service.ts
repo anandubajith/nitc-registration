@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../model/user.entity';
+import { UserEntity } from './model/user.entity';
 import { Repository, Like } from 'typeorm';
-import { User, UserRole } from '../model/user.interface';
+import { User, UserRole } from './model/user.interface';
 import { Observable, from, throwError } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { AuthService } from 'src/auth/service/auth.service';
+import { AuthService } from '../auth/auth.service';
 import {
   paginate,
   Pagination,
@@ -24,10 +24,14 @@ export class UserService {
     return this.authService.hashPassword(user.password).pipe(
       switchMap((passwordHash: string) => {
         const newUser = new UserEntity();
-        newUser.name = user.name;
         newUser.username = user.username;
         newUser.email = user.email;
         newUser.password = passwordHash;
+        newUser.contactNumber = user.contactNumber;
+        newUser.semester = user.semester;
+        newUser.name = user.name;
+        newUser.category = user.category;
+        newUser.department = user.department;
         newUser.role = UserRole.USER;
 
         return from(this.userRepository.save(newUser)).pipe(
@@ -81,7 +85,7 @@ export class UserService {
         skip: options.page * options.limit || 0,
         take: options.limit || 10,
         order: { id: 'ASC' },
-        select: ['id', 'name', 'username', 'email', 'role'],
+        select: ['id', 'username', 'email', 'role'],
         where: [{ username: Like(`%${user.username}%`) }],
       }),
     ).pipe(
@@ -131,34 +135,26 @@ export class UserService {
     return from(this.userRepository.update(id, user));
   }
 
-  login(user: User): Observable<string> {
-    return this.validateUser(user.email, user.password).pipe(
+  login(user: User): Observable<any> {
+    return this.validateUser(user.username, user.password).pipe(
       switchMap((user: User) => {
         if (user) {
           return this.authService
             .generateJWT(user)
             .pipe(map((jwt: string) => jwt));
         } else {
-          return 'Wrong Credentials';
+          return throwError('Wrong Credentials');
         }
       }),
     );
   }
 
-  validateUser(email: string, password: string): Observable<User> {
+  validateUser(username: string, password: string): Observable<User> {
     return from(
       this.userRepository.findOne(
-        { email },
+        { username },
         {
-          select: [
-            'id',
-            'password',
-            'name',
-            'username',
-            'email',
-            'role',
-            'profileImage',
-          ],
+          select: ['id', 'password', 'username', 'email', 'role'],
         },
       ),
     ).pipe(

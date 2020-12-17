@@ -6,8 +6,8 @@ import {
   ExecutionContext,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { UserService } from 'src/user/service/user.service';
-import { User } from 'src/user/model/user.interface';
+import { UserService } from '../../user/user.service';
+import { User } from '../../user/model/user.interface';
 import { map } from 'rxjs/operators';
 
 @Injectable()

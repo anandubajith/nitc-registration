@@ -1,51 +1,17 @@
-# NIT-C Registration backend
-## Progress
-#### User
-- [x] /api/user/login 
-- [ ] /api/user/update
-- [ ] /api/user/forgot-password
-- [ ] /api/user/reset-password
-#### Application
-- [ ] /api/application/submit
-- [ ] /api/application/list
-- [ ] /api/application/:id
-- [ ] /api/application/:id/update
-- [ ] /api/application/:id/status/update
-- [ ] /api/application/:id/status/update
-#### Due
-- [ ] /api/due/list
-- [ ] /api/due/upload
+
+User
+- POST /user/login
+- POST /user/register
+
+Due
+- GET /due <-  return the currently authenticated students due
+- GET /due/list <- list all the dues ( if role = ACADEMIC)
+- POST /due/create <-  create a due entry
+- POST /due/update <- update a due entry
 
 
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
+Application
+- GET /application <-  get current students application
+- POST /application <- update the current students application
+- GET /application/list <- let academic list all, let FA list his
+- POST /application/status/update <-  update or reject the application

@@ -6,9 +6,9 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { UserService } from 'src/user/service/user.service';
+import { UserService } from '../../user/user.service';
 import { Observable } from 'rxjs';
-import { User } from 'src/user/model/user.interface';
+import { User } from '../../user/model/user.interface';
 import { map } from 'rxjs/operators';
 import { hasRoles } from '../decorators/roles.decorator';
 

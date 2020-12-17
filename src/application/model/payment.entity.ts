@@ -5,8 +5,6 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { UserEntity } from '../../user/model/user.entity';
-import { ApplicationEntity } from './application.entity';
 
 @Entity()
 export class PaymentEntity {
@@ -26,11 +24,4 @@ export class PaymentEntity {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: true })
   updatedAt: Date;
-
-  // todo: relate with applciation
-  @ManyToOne(
-    type => ApplicationEntity,
-    application => application.payments,
-  )
-  application: ApplicationEntity;
 }

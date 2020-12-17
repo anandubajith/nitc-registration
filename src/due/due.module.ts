@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
-import { DueService } from './service/due.service';
-import { DueController } from './controller/due.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DueController } from './due.controller';
+import { DueService } from './due.service';
 import { DueEntity } from './model/due.entity';
-import { UserModule } from '../user/user.module';
-import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([DueEntity]), UserModule, AuthModule],
-  providers: [DueService],
+  imports: [TypeOrmModule.forFeature([DueEntity])],
   controllers: [DueController],
+  providers: [DueService],
+  exports: [],
 })
 export class DueModule {}
