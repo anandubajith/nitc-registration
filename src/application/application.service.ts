@@ -23,6 +23,7 @@ export class ApplicationService {
     );
   }
 
+
   findAll(): Observable<Application[]> {
     return from(this.applicationRepository.find()).pipe(
       map((applications: Application[]) => {

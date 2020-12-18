@@ -1,16 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
 import { Due } from 'src/due/model/due.interface';
+import { User } from 'src/user/model/user.interface';
 import { ApplicationService } from './application.service';
 import { Application } from './model/application.interface';
 
 @Controller('application')
 export class ApplicationController {
   constructor(private applicationService: ApplicationService) {}
+  
   @Get()
-  getApplication(): Observable<Application> {
-    return this.applicationService.findOne(1);
+  @UseGuards(JwtAuthGuard)
+  getApplication(@CurrentUser() user: User): Observable<Application> {
+    return this.applicationService.findOne(user.id);
   }
 
   @Post()

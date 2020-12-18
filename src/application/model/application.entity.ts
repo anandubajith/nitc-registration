@@ -1,3 +1,5 @@
+import { UserEntity } from 'src/user/model/user.entity';
+import { User } from 'src/user/model/user.interface';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -32,6 +34,9 @@ export class ApplicationEntity {
   @Column({ nullable: true })
   verifiedBy: string;
 
+  @OneToOne(() => UserEntity)
+  @JoinColumn()
+  owner: User;
 
   @OneToOne(() => PaymentEntity)
   @JoinColumn()
