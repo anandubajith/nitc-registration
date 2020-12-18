@@ -2,8 +2,10 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { hasRoles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
-import { User } from 'src/user/model/user.interface';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { User, UserRole } from 'src/user/model/user.interface';
 import { DueService } from './due.service';
 import { Due } from './model/due.interface';
 
@@ -18,6 +20,8 @@ export class DueController {
     return this.dueService.findByUsername(user.username);
   }
 
+  @hasRoles(UserRole.HOSTEL_ADMIN, UserRole.LIBRARY_ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)    
   @Get('list')
   listDues(): Observable<Due[]> {
     return this.dueService.findAll();

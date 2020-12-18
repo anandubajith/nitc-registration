@@ -13,5 +13,7 @@ export interface User {
 
 export enum UserRole {
   ADMIN = 'admin',
+  HOSTEL_ADMIN = 'hostel_admin',
+  LIBRARY_ADMIN = 'library_admin',
   USER = 'user',
 }
