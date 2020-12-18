@@ -8,10 +8,22 @@ import { Due, DueType } from './model/due.interface';
 
 @Injectable()
 export class DueService {
+
   constructor(
     @InjectRepository(DueEntity)
     private readonly dueRepository: Repository<DueEntity>,
   ) {}
+
+
+  findByUsername(rollNumber: string): Observable<Due[]> {
+    return from(
+      this.dueRepository.find({ rollNumber }),
+    ).pipe(
+      map((dues: Due[]) => {
+        return dues;
+      }),
+    );
+  }
 
   findOne(rollNumber: string): Observable<Due> {
     return from(

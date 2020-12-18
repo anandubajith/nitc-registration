@@ -1,16 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
+import { User } from 'src/user/model/user.interface';
 import { DueService } from './due.service';
 import { Due } from './model/due.interface';
 
 @Controller('due')
+
 export class DueController {
   constructor(private dueService: DueService) {}
 
   @Get()
-  getUserDue(): Observable<Due> {
-    return this.dueService.findOne('B180288CS');
+  @UseGuards(JwtAuthGuard)
+  getUserDue( @CurrentUser() user: User): Observable<Due[]> {
+    return this.dueService.findByUsername(user.username);
   }
 
   @Get('list')

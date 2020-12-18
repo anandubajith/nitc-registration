@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 import { DueType } from './due.interface';
 
 @Entity()
+@Unique(["rollNumber", "type"])
 export class DueEntity {
   @PrimaryGeneratedColumn()
   id: number;
