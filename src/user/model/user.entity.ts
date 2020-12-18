@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+import { ApplicationEntity } from 'src/application/model/application.entity';
+import { Application } from 'src/application/model/application.interface';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, JoinColumn, OneToOne } from 'typeorm';
 import { UserRole } from './user.interface';
 @Entity()
 export class UserEntity {
@@ -31,6 +33,10 @@ export class UserEntity {
 
   @Column()
   category: string;
+
+  @OneToOne(() => ApplicationEntity)
+  @JoinColumn()
+  application: Application;
 
   @BeforeInsert()
   emailToLowerCase() {
