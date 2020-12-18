@@ -18,7 +18,7 @@ export class ApplicationService {
   findOne(userId: number): Observable<Application> {
     return from(
       // this.applicationRepository.findOne({ owner }, { relations: ['owner'] }),
-      this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner','payment'] })
+      this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner','payment','verificationStatus'] })
     ).pipe(
       map((application: Application) => {
         return application;
@@ -32,7 +32,7 @@ export class ApplicationService {
     ).pipe(
       map((applicationFound:Application) => {
         delete application.id;
-        return {...applicationFound, ...application};
+        return {...applicationFound, ...application, status: ApplicationStatus.PENDING};
       }),
       map((applicationUpdated:Application) => {
         return this.applicationRepository.save(applicationUpdated)

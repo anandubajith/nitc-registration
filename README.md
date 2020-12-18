@@ -1,6 +1,6 @@
 
 User
-- POST /user/login
+- POST /user/login                     
 - POST /user/register
 
 Due
@@ -19,7 +19,7 @@ Application
     if user return the currently saved details
     else throw error
 
-- PATCH /application                    
+- PATCH /application                    ✅     
     if StudentIsOwner apply updates
     else throw error
 
