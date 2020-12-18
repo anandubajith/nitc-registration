@@ -12,7 +12,7 @@ export class DueService {
   constructor(
     @InjectRepository(DueEntity)
     private readonly dueRepository: Repository<DueEntity>,
-  ) {}
+  ) { }
 
 
   findByUsername(rollNumber: string): Observable<Due[]> {
@@ -26,7 +26,7 @@ export class DueService {
   }
 
   findByType(type: DueType): Observable<Due[]> {
-    return from(this.dueRepository.find({ type: type}));
+    return from(this.dueRepository.find({ type: type }));
   }
 
   findOne(rollNumber: string): Observable<Due> {
@@ -47,12 +47,26 @@ export class DueService {
     );
   }
 
-  create(dueData: Due): Observable<Due> {
-    const due = new DueEntity();
-    due.amount = dueData.amount;
-    due.rollNumber = dueData.rollNumber;
-    due.updatedDate = Date.now().toString();
-    due.type = DueType.HOSTEL;
-    return from(this.dueRepository.save(due));
+  create(dueData: Due): Observable<any> {
+    return from(
+      this.dueRepository.findOne({ type: dueData.type, rollNumber: dueData.rollNumber }, { relations: [] }),
+    ).pipe(
+      map((due: Due) => {
+        if (due) {
+          due.amount = dueData.amount;
+        } else {
+          due = new DueEntity();
+          due.amount = dueData.amount;
+          due.type = dueData.type;
+          due.rollNumber = dueData.rollNumber;
+        }
+        return due;
+      }),
+      map((due: Due) => {
+        due.updatedDate = Date.now().toString();
+        return this.dueRepository.save(due);
+      })
+    );
+
   }
 }
