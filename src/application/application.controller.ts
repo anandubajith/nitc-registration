@@ -24,11 +24,11 @@ export class ApplicationController {
   }
 
   @Put()
-  @UseGuards(JwtAuthGuard,RolesGuard, UserIsUserGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @hasRoles(UserRole.USER)
-  updateApplication(@Body() application: ApplicationDTO): Observable<Application> {
+  updateApplication(@CurrentUser() user: User,@Body() application: ApplicationDTO): Observable<Application> {
     // find the application of the user and apply update
-    return null;
+    return this.applicationService.updateByUserId(user.id, application);
   }
   
 

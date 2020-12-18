@@ -38,7 +38,7 @@ export class ApplicationEntity {
   @JoinColumn()
   owner: User;
 
-  @OneToOne(() => PaymentEntity)
+  @OneToOne(() => PaymentEntity,{ cascade: true })
   @JoinColumn()
   payment: Payment;
 
