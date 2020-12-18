@@ -29,24 +29,6 @@ export class DueService {
     return from(this.dueRepository.find({ type: type }));
   }
 
-  findOne(rollNumber: string): Observable<Due> {
-    return from(
-      this.dueRepository.findOne({ rollNumber }, { relations: [] }),
-    ).pipe(
-      map((due: Due) => {
-        return due;
-      }),
-    );
-  }
-
-  findAll(): Observable<Due[]> {
-    return from(this.dueRepository.find()).pipe(
-      map((dues: Due[]) => {
-        return dues;
-      }),
-    );
-  }
-
   create(dueData: Due): Observable<any> {
     return from(
       this.dueRepository.findOne({ type: dueData.type, rollNumber: dueData.rollNumber }, { relations: [] }),
