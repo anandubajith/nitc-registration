@@ -15,15 +15,16 @@ Due
     else throw error
 
 Application
-- GET /application
+- GET /application                      ✅
     if user return the currently saved details
     else throw error
-- PATCH /application
+
+- PATCH /application                    
     if StudentIsOwner apply updates
     else throw error
 
 - PUT /application/status
-    if SAC|Faculty|Academic set remark, update application status
+    if SAC|Faculty|Academic set remark, update application status, set in verificationEntity
     else throw error
 
 - GET /application/list                 ✅

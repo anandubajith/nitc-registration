@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { User } from 'src/user/model/user.interface';
 import { Repository } from 'typeorm';
 import { ApplicationEntity } from './model/application.entity';
 import { Application, ApplicationStatus } from './model/application.interface';
@@ -11,11 +12,12 @@ export class ApplicationService {
   constructor(
     @InjectRepository(ApplicationEntity)
     private readonly applicationRepository: Repository<ApplicationEntity>,
-  ) {}
+  ) { }
 
-  findOne(id: number): Observable<Application> {
+  findOne(userId: number): Observable<Application> {
     return from(
-      this.applicationRepository.findOne({ id }, { relations: [] }),
+      // this.applicationRepository.findOne({ owner }, { relations: ['owner'] }),
+      this.applicationRepository.findOne({ owner: {id: userId}}, { relations: ['owner']} )
     ).pipe(
       map((application: Application) => {
         return application;
@@ -23,8 +25,9 @@ export class ApplicationService {
     );
   }
 
-  findByStatus(status: ApplicationStatus ): Observable<Application[]> {
-    return from(this.applicationRepository.find({ status }));
+  findByStatus(status: ApplicationStatus): Observable<Application[]> {
+    return from(this.applicationRepository
+      .find({ where: [{ status }], select: ['id', 'submission_date'], order: { submission_date: 'ASC' } }));
   }
 
   findAll(): Observable<Application[]> {

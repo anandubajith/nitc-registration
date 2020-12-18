@@ -11,6 +11,7 @@ import {
   Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
+import { Application } from 'src/application/model/application.interface';
 
 @Injectable()
 export class UserService {
