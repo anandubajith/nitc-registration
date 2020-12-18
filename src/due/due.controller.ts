@@ -10,7 +10,6 @@ import { DueService } from './due.service';
 import { Due } from './model/due.interface';
 
 @Controller('due')
-
 export class DueController {
   constructor(private dueService: DueService) {}
 
@@ -28,15 +27,15 @@ export class DueController {
   }
 
   @Post('create')
+  @hasRoles(UserRole.HOSTEL_ADMIN, UserRole.LIBRARY_ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)    
   create(@Body() due: Due): Observable<Due | Object> {
+    // upload a CSV with rollNumber, amount
+    // due type based on the current user
     return this.dueService.create(due).pipe(
       map((due: Due) => due),
       catchError(err => of({ error: err.message })),
     );
   }
 
-  @Post('update')
-  updateDue(): string {
-    return 'update a due';
-  }
 }
