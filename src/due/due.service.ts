@@ -25,6 +25,10 @@ export class DueService {
     );
   }
 
+  findByType(type: DueType): Observable<Due[]> {
+    return from(this.dueRepository.find({ type: type}));
+  }
+
   findOne(rollNumber: string): Observable<Due> {
     return from(
       this.dueRepository.findOne({ rollNumber }, { relations: [] }),

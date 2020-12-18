@@ -1,3 +1,5 @@
+import { Application } from "src/application/model/application.interface";
+
 export interface User {
   id?: number;
   username?: string;
@@ -9,6 +11,7 @@ export interface User {
   semester?: string;
   department?: string;
   category?: string;
+  application?: Application;
 }
 
 export enum UserRole {

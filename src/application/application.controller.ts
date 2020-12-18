@@ -15,6 +15,7 @@ export class ApplicationController {
   @Get()
   @UseGuards(JwtAuthGuard)
   getApplication(@CurrentUser() user: User): Observable<Application> {
+    console.log(user.application);
     return this.applicationService.findOne(user.id);
   }
 
