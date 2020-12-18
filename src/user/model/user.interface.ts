@@ -18,5 +18,8 @@ export enum UserRole {
   ADMIN = 'admin',
   HOSTEL_ADMIN = 'hostel_admin',
   LIBRARY_ADMIN = 'library_admin',
+  ACADEMIC_ADMIN = 'academic_admin',
+  SAC = 'sac_admin',
+  FACULTY = 'fa',
   USER = 'user',
 }

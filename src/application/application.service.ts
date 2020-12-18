@@ -23,6 +23,9 @@ export class ApplicationService {
     );
   }
 
+  findByStatus(status: ApplicationStatus ): Observable<Application[]> {
+    return from(this.applicationRepository.find({ status }));
+  }
 
   findAll(): Observable<Application[]> {
     return from(this.applicationRepository.find()).pipe(
