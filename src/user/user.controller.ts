@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User, UserRole } from './model/user.interface';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { hasRoles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-guard';
@@ -34,8 +34,8 @@ export class UserController {
   @Post('login')
   login(@Body() user: User): Observable<Object> {
     return this.userService.login(user).pipe(
-      map((jwt: string) => {
-        return { access_token: jwt };
+      map((response: object) => {
+        return response;
       }),
       catchError(_ => {
         throw new HttpException('Invalid login', HttpStatus.UNAUTHORIZED);
@@ -46,8 +46,8 @@ export class UserController {
   @Get('me')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @hasRoles(UserRole.USER)
-  userDetails(): string {
-    return 'hi';
+  userDetails(): Observable<User> {
+    return from(this.userService.findOne(1));
   }
 
   // admin can delete?

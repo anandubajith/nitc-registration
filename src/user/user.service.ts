@@ -18,7 +18,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   create(user: User): Observable<User> {
     return this.authService.hashPassword(user.password).pipe(
@@ -57,7 +57,7 @@ export class UserService {
   findAll(): Observable<User[]> {
     return from(this.userRepository.find()).pipe(
       map((users: User[]) => {
-        users.forEach(function(v) {
+        users.forEach(function (v) {
           delete v.password;
         });
         return users;
@@ -68,7 +68,7 @@ export class UserService {
   paginate(options: IPaginationOptions): Observable<Pagination<User>> {
     return from(paginate<User>(this.userRepository, options)).pipe(
       map((usersPageable: Pagination<User>) => {
-        usersPageable.items.forEach(function(v) {
+        usersPageable.items.forEach(function (v) {
           delete v.password;
         });
         return usersPageable;
@@ -141,7 +141,9 @@ export class UserService {
         if (user) {
           return this.authService
             .generateJWT(user)
-            .pipe(map((jwt: string) => jwt));
+            .pipe(map((jwt: string) => ({
+              user, accessToken: jwt
+            })));
         } else {
           return throwError('Wrong Credentials');
         }
@@ -154,7 +156,7 @@ export class UserService {
       this.userRepository.findOne(
         { username },
         {
-          select: ['id', 'password', 'username', 'email', 'role'],
+          select: ['id', 'password', 'username', 'email', 'role', 'department', 'semester', 'category', 'contactNumber'],
         },
       ),
     ).pipe(
