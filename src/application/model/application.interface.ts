@@ -3,7 +3,7 @@ import {Verification} from './verification.interface';
 export interface Application {
   id?: number;
   status: ApplicationStatus;
-  verificationStatus: Verfication;
+  verificationStatus: Verification;
 }
 
 export enum ApplicationStatus {
