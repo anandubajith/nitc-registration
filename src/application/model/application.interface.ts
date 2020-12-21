@@ -1,6 +1,9 @@
+import {Verification} from './verification.interface';
+
 export interface Application {
   id?: number;
   status: ApplicationStatus;
+  verificationStatus: Verfication;
 }
 
 export enum ApplicationStatus {

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Patch, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { use } from 'passport';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -44,6 +44,15 @@ export class ApplicationController {
       return this.applicationService.findByStatus(ApplicationStatus.PENDING_ACADEMIC);
     }
     throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+  }
+
+  @Put('status')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.SAC, UserRole.FACULTY, UserRole.ACADEMIC_ADMIN)
+  updateApplicationStatus(@CurrentUser() user: User, @Query('id') id: number): Observable<Application> {
+    return this.applicationService.verifyApplication(user, id);
+    // if application is in the correct stage, advance and set
+    return null;
   }
 
   @Post('create')

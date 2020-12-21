@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
+import { application } from 'express';
 import { userInfo } from 'os';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from 'src/user/model/user.interface';
+import { User, UserRole } from 'src/user/model/user.interface';
 import { Repository } from 'typeorm';
 import { ApplicationEntity } from './model/application.entity';
 import { Application, ApplicationDTO, ApplicationStatus } from './model/application.interface';
@@ -18,23 +20,65 @@ export class ApplicationService {
   findOne(userId: number): Observable<Application> {
     return from(
       // this.applicationRepository.findOne({ owner }, { relations: ['owner'] }),
-      this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner','payment','verificationStatus'] })
+      this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner', 'payment', 'verificationStatus'] })
     ).pipe(
       map((application: Application) => {
         return application;
       }),
     );
   }
+  getStageByUserType(role: UserRole): ApplicationStatus {
+    if (role === UserRole.ACADEMIC_ADMIN) {
+      return ApplicationStatus.PENDING_ACADEMIC;
+    } else if (role === UserRole.SAC) {
+      return ApplicationStatus.PENDING_SAC;
+    } else if (role === UserRole.FACULTY) {
+      return ApplicationStatus.PENDING_FA;
+    }
+    throw Error('Invalid role');
+  }
+  getNextStage(stage: ApplicationStatus): ApplicationStatus {
+    if (stage == ApplicationStatus.PENDING_SAC) {
+      return ApplicationStatus.PENDING_FA;
+    } else if (stage == ApplicationStatus.PENDING_FA) {
+      return ApplicationStatus.PENDING_ACADEMIC;
+    }
+    throw Error('Invalid???');
+  }
+  verifyApplication(user: User, id: number): Observable<any> {
+    return from(
+      this.applicationRepository.findOne({ id: id })
+    ).pipe(
+      map((application: Application) => {
+        if (application.status !== this.getStageByUserType(user.role)) {
+          throw new Error('Trying to update Application of invalid stage');
+        }
+        return application;
+      }),
+      map((application: Application) => {
+        application.status = this.getNextStage(application.status);
+        if (user.role === UserRole.SAC) {
+          application.verificationStatus.sacId = user.id;
+        } else if (user.role === UserRole.FACULTY) {
+          application.verificationStatus.facultyId = user.id;
+        } else if (user.role === UserRole.ACADEMIC_ADMIN) {
+          application.verificationStatus.academicId = user.id;
+        }
+        application.verificationStatus.remark = 'TODO REMARK'+user.id;
+        return this.applicationRepository.save(application);
+      })
+    );
+  }
 
   updateByUserId(userId: number, application: ApplicationDTO): Observable<any> {
-     return from(
-      this.applicationRepository.findOne({ owner: {id:userId}}, { relations: ['owner']})
+    return from(
+      this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner'] })
     ).pipe(
-      map((applicationFound:Application) => {
+      map((applicationFound: Application) => {
         delete application.id;
-        return {...applicationFound, ...application, status: ApplicationStatus.PENDING};
+        return { ...applicationFound, ...application, status: ApplicationStatus.PENDING };
       }),
-      map((applicationUpdated:Application) => {
+      map((applicationUpdated: Application) => {
         return this.applicationRepository.save(applicationUpdated)
       })
     )

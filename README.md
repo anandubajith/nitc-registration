@@ -1,7 +1,9 @@
 
 User
-- POST /user/login                     
+- POST /user/login                     ✅
+    takes {username, password } and logs in
 - POST /user/register
+    temporary endpoint
 
 Due
 - GET /due                              ✅
