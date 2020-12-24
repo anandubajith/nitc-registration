@@ -148,7 +148,7 @@ export class UserService {
   }
 
   login(user: User): Observable<any> {
-    return this.validateUser(user.username.toUpperCase(), user.password).pipe(
+    return this.validateUser(user.username, user.password).pipe(
       switchMap((user: User) => {
         if (user) {
           return this.authService
