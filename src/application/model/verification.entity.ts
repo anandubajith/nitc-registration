@@ -10,16 +10,16 @@ export class VerificationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true})
   sacId: number;
 
-  @Column()
+  @Column({ nullable: true})
   facultyId: number;
     
-  @Column()
+  @Column({ nullable: true})
   academicId: number;
 
-  @Column()
+  @Column({ nullable: true})
   remark: string;
 
   @UpdateDateColumn({ name: 'updated_at', nullable: true })
