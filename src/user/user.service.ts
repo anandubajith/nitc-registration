@@ -77,6 +77,17 @@ export class UserService {
     );
   }
 
+  getFaNames(): Observable<String[]> {
+    return from( this.userRepository.find({
+      where: [{ role: UserRole.FACULTY}],
+      select: ['name']
+    })).pipe(
+      map( user => {
+        return user.map(u => u.name);
+      })
+    )
+  }
+
   paginateFilterByUsername(
     options: IPaginationOptions,
     user: User,

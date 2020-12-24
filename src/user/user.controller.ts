@@ -50,6 +50,13 @@ export class UserController {
     return from(this.userService.findOne(1));
   }
 
+  @Get('fa-names')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.USER)
+  getFaNames(): Observable<String[]> {
+    return from(this.userService.getFaNames());
+  }
+
   // admin can delete?
   @hasRoles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
