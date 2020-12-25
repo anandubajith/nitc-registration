@@ -9,6 +9,7 @@ import { User, UserRole } from 'src/user/model/user.interface';
 import { Repository } from 'typeorm';
 import { ApplicationEntity } from './model/application.entity';
 import { Application, ApplicationDTO, ApplicationStatus } from './model/application.interface';
+import { VerificationEntity } from './model/verification.entity';
 
 @Injectable()
 export class ApplicationService {
@@ -68,6 +69,8 @@ export class ApplicationService {
       map((application: Application) => {
         if ( status === 'accepted')
           application.status = this.getNextStage(application.status);
+        if ( application.verificationStatus == null) 
+          application.verificationStatus = new VerificationEntity();
         if (user.role === UserRole.SAC) {
           application.verificationStatus.sacId = user.id;
         } else if (user.role === UserRole.FACULTY) {
