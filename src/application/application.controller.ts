@@ -57,8 +57,8 @@ export class ApplicationController {
   @Put('status')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @hasRoles(UserRole.SAC, UserRole.FACULTY, UserRole.ACADEMIC_ADMIN)
-  updateApplicationStatus(@CurrentUser() user: User, @Query('id') id: number): Observable<Application> {
-    return this.applicationService.verifyApplication(user, id);
+  updateApplicationStatus(@CurrentUser() user: User, @Query('id') id: number, @Query('status') status: string): Observable<Application> {
+    return this.applicationService.verifyApplication(user, id, status);
   }
 
   @Post('create')

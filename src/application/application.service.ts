@@ -55,7 +55,7 @@ export class ApplicationService {
     }
     throw Error('Invalid???');
   }
-  verifyApplication(user: User, id: number): Observable<any> {
+  verifyApplication(user: User, id: number, status: string): Observable<any> {
     return from(
       this.applicationRepository.findOne({ id: id })
     ).pipe(
@@ -66,7 +66,8 @@ export class ApplicationService {
         return application;
       }),
       map((application: Application) => {
-        application.status = this.getNextStage(application.status);
+        if ( status === 'accepted')
+          application.status = this.getNextStage(application.status);
         if (user.role === UserRole.SAC) {
           application.verificationStatus.sacId = user.id;
         } else if (user.role === UserRole.FACULTY) {
@@ -74,7 +75,7 @@ export class ApplicationService {
         } else if (user.role === UserRole.ACADEMIC_ADMIN) {
           application.verificationStatus.academicId = user.id;
         }
-        application.verificationStatus.remark = 'TODO REMARK'+user.id;
+        application.verificationStatus.remark = status;
         return this.applicationRepository.save(application);
       })
     );
