@@ -24,3 +24,11 @@ export enum UserRole {
   FACULTY = 'fa',
   USER = 'user',
 }
+
+export interface UserUpdateDTO {
+  email?: string;
+  password?: string;
+  contactNumber?: string;
+  egrantz?: boolean;
+  category?: string;
+}

@@ -168,7 +168,7 @@ export class UserService {
       this.userRepository.findOne(
         { username },
         {
-          select: ['id', 'password', 'name', 'username', 'email', 'role', 'department', 'semester', 'category', 'contactNumber'],
+          select: ['id', 'password', 'name', 'username', 'email', 'role', 'department', 'semester','egrantz', 'faName', 'category', 'contactNumber'],
         },
       ),
     ).pipe(
