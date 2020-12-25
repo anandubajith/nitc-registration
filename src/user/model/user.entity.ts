@@ -34,7 +34,13 @@ export class UserEntity {
   @Column({nullable: true})
   category: string;
 
-  @OneToOne(() => ApplicationEntity, {nullable: true,, cascade:true})
+  @Column({nullable: true})
+  egrantz: boolean;
+
+  @Column({nullable: true})
+  faName: string;
+
+  @OneToOne(() => ApplicationEntity, {nullable: true, cascade:true})
   @JoinColumn()
   application: Application;
 
