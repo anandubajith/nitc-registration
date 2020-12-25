@@ -20,24 +20,25 @@ export class ApplicationController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @hasRoles(UserRole.USER, UserRole.ACADEMIC_ADMIN, UserRole.FACULTY, UserRole.SAC)
   getApplication(@Query('id') id, @CurrentUser() user: User): Observable<Application> {
-    if ( user.role === UserRole.USER) {
+    if (user.role === UserRole.USER) {
       return this.applicationService.findOneByUserId(user.id);
-    } else if ( [UserRole.ACADEMIC_ADMIN, UserRole.FACULTY, UserRole.SAC].includes(user.role) ) {
+    } else if ([UserRole.ACADEMIC_ADMIN, UserRole.FACULTY, UserRole.SAC].includes(user.role)) {
       // if no id throw error
-      console.log("THE QUERY PARAM IS: "+ id);
-      // if academic/sac/fa pull based on the id
-      return this.applicationService.findOne(id);
+      if (id !== null)
+        // if academic/sac/fa pull based on the id
+        return this.applicationService.findOne(id);
     }
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   @Put()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @hasRoles(UserRole.USER)
-  updateApplication(@CurrentUser() user: User,@Body() application: ApplicationDTO): Observable<Application> {
+  updateApplication(@CurrentUser() user: User, @Body() application: ApplicationDTO): Observable<Application> {
     // find the application of the user and apply update
     return this.applicationService.updateByUserId(user.id, application);
   }
-  
+
 
   @Get('list')
   @UseGuards(JwtAuthGuard, RolesGuard)
