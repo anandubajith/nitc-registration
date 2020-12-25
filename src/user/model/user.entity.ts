@@ -34,11 +34,14 @@ export class UserEntity {
   @Column({nullable: true})
   category: string;
 
-  @Column({nullable: true})
+  @Column({nullable: true, default: false})
   egrantz: boolean;
 
   @Column({nullable: true})
   faName: string;
+
+  @Column({nullable: true, default:false})
+  profileUpdated: boolean;
 
   @OneToOne(() => ApplicationEntity, {nullable: true, cascade:true})
   @JoinColumn()
