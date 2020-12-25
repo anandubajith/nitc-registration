@@ -17,10 +17,20 @@ export class ApplicationService {
     private readonly applicationRepository: Repository<ApplicationEntity>,
   ) { }
 
-  findOne(userId: number): Observable<Application> {
+  findOneByUserId(userId: number): Observable<Application> {
     return from(
       // this.applicationRepository.findOne({ owner }, { relations: ['owner'] }),
       this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner', 'payment', 'verificationStatus'] })
+    ).pipe(
+      map((application: Application) => {
+        return application;
+      }),
+    );
+  }
+  findOne(id: number): Observable<Application> {
+    return from(
+      // this.applicationRepository.findOne({ owner }, { relations: ['owner'] }),
+      this.applicationRepository.findOne({ id }, { relations: ['owner', 'payment', 'verificationStatus'] })
     ).pipe(
       map((application: Application) => {
         return application;

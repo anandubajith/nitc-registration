@@ -18,9 +18,16 @@ export class ApplicationController {
 
   @Get()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @hasRoles(UserRole.USER)
-  getApplication(@CurrentUser() user: User): Observable<Application> {
-    return this.applicationService.findOne(user.id);
+  @hasRoles(UserRole.USER, UserRole.ACADEMIC_ADMIN, UserRole.FACULTY, UserRole.SAC)
+  getApplication(@Query('id') id, @CurrentUser() user: User): Observable<Application> {
+    if ( user.role === UserRole.USER) {
+      return this.applicationService.findOneByUserId(user.id);
+    } else if ( [UserRole.ACADEMIC_ADMIN, UserRole.FACULTY, UserRole.SAC].includes(user.role) ) {
+      // if no id throw error
+      console.log("THE QUERY PARAM IS: "+ id);
+      // if academic/sac/fa pull based on the id
+      return this.applicationService.findOne(id);
+    }
   }
 
   @Put()
@@ -51,8 +58,6 @@ export class ApplicationController {
   @hasRoles(UserRole.SAC, UserRole.FACULTY, UserRole.ACADEMIC_ADMIN)
   updateApplicationStatus(@CurrentUser() user: User, @Query('id') id: number): Observable<Application> {
     return this.applicationService.verifyApplication(user, id);
-    // if application is in the correct stage, advance and set
-    return null;
   }
 
   @Post('create')
