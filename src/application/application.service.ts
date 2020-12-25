@@ -53,6 +53,8 @@ export class ApplicationService {
       return ApplicationStatus.PENDING_FA;
     } else if (stage == ApplicationStatus.PENDING_FA) {
       return ApplicationStatus.PENDING_ACADEMIC;
+    } else if ( stage == ApplicationStatus.PENDING_ACADEMIC) {
+      return ApplicationStatus.VERIFIED;
     }
     throw Error('Invalid???');
   }
