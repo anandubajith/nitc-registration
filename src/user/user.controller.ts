@@ -18,6 +18,7 @@ import { hasRoles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserIsUserGuard } from '../auth/guards/UserIsUser.guard';
+import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 
 @Controller('users')
 export class UserController {
@@ -45,9 +46,9 @@ export class UserController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @hasRoles(UserRole.USER)
-  userDetails(): Observable<User> {
-    return from(this.userService.findOne(1));
+  @hasRoles(UserRole.USER, UserRole.FACULTY)
+  userDetails( @CurrentUser() user: User): Observable<User> {
+    return from(this.userService.findOne(user.id));
   }
 
   @Get('fa-names')
