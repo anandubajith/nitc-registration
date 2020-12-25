@@ -10,6 +10,7 @@ export interface User {
   name?: string;
   semester?: string;
   department?: string;
+  egrantz?: boolean;
   category?: string;
   application?: Application;
 }
