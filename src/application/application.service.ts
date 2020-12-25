@@ -76,7 +76,7 @@ export class ApplicationService {
     ).pipe(
       map((applicationFound: Application) => {
         delete application.id;
-        return { ...applicationFound, ...application, status: ApplicationStatus.PENDING };
+        return { ...applicationFound, ...application, status: ApplicationStatus.PENDING_SAC };
       }),
       map((applicationUpdated: Application) => {
         return this.applicationRepository.save(applicationUpdated)
