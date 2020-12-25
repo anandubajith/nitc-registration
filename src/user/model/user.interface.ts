@@ -31,5 +31,6 @@ export interface UserUpdateDTO {
   password?: string;
   contactNumber?: string;
   egrantz?: boolean;
+  faName?: string;
   category?: string;
 }

@@ -22,7 +22,7 @@ import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   @Post('login')
   login(@Body() user: User): Observable<Object> {
@@ -39,16 +39,22 @@ export class UserController {
   @Get('me')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @hasRoles(UserRole.USER, UserRole.FACULTY)
-  userDetails( @CurrentUser() user: User): Observable<User> {
+  userDetails(@CurrentUser() user: User): Observable<User> {
     return from(this.userService.findOne(user.id));
   }
 
   @Post('me')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @hasRoles(UserRole.USER, UserRole.FACULTY)
-  updateUserDetails( @CurrentUser() user: User, @Body() details: UserUpdateDTO): Observable<User> {
-    // TODO: 
-    return from(this.userService.updateOne(user.id, { ...user, ...details }));
+  updateUserDetails(@CurrentUser() user: User, @Body() details: UserUpdateDTO): Observable<User> {
+    const updated = {
+      email: details.email,
+      contactNumber: details.contactNumber,
+      egrantz: details.egrantz,
+      faName: details.faName,
+      category: details.category,
+    }
+    return from(this.userService.updateOne(user.id, { ...user, ...updated }));
 
   }
 
