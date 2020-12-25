@@ -31,18 +31,15 @@ export class ApplicationEntity {
   @Column({ nullable: true })
   submission_date: string;
 
-  @Column({ nullable: true })
-  verifiedBy: string;
-
   @OneToOne(() => UserEntity)
   @JoinColumn()
   owner: User;
 
-  @OneToOne(() => PaymentEntity,{ cascade: true })
+  @OneToOne(() => PaymentEntity,{ cascade: true, nullable: true})
   @JoinColumn()
   payment: Payment;
 
-  @OneToOne(() => VerificationEntity)
+  @OneToOne(() => VerificationEntity, {cascade: true, nullable: true})
   @JoinColumn()
   verificationStatus: Verification;
 

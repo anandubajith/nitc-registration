@@ -19,22 +19,22 @@ export class UserEntity {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
-  @Column()
+  @Column({nullable: true})
   contactNumber: string;
 
   @Column()
   name: string;
 
-  @Column()
+  @Column({nullable: true})
   semester: string;
 
-  @Column()
+  @Column({nullable: true})
   department: string;
 
-  @Column()
+  @Column({nullable: true})
   category: string;
 
-  @OneToOne(() => ApplicationEntity)
+  @OneToOne(() => ApplicationEntity, {nullable: true,, cascade:true})
   @JoinColumn()
   application: Application;
 
