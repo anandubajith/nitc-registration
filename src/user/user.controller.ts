@@ -53,6 +53,7 @@ export class UserController {
       egrantz: details.egrantz,
       faName: details.faName,
       category: details.category,
+      profileUpdated: true,
     }
     return from(this.userService.updateOne(user.id, { ...user, ...updated }));
 
