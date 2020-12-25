@@ -72,7 +72,7 @@ export class ApplicationService {
 
   updateByUserId(userId: number, application: ApplicationDTO): Observable<any> {
     return from(
-      this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner'] })
+      this.applicationRepository.findOne({ owner: { id: userId } }, { relations: ['owner','payment', 'verificationStatus'] })
     ).pipe(
       map((applicationFound: Application) => {
         delete application.id;
