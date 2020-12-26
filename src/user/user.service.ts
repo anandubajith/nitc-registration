@@ -52,11 +52,11 @@ export class UserService {
     return this.validateUser(username, oldPassword).pipe(
       switchMap((user: User) => {
         if (user) {
+          console.log("Got user", user.username)
           return this.authService.hashPassword(newPassword)
             .pipe(map(passwordHash => {
-              return { ...user, password: passwordHash }
-            }), map((user) => {
-              return from(this.userRepository.update(user.id, user));
+              console.log("newPassword", passwordHash);
+              return  from(this.userRepository.update(user.id, { ...user, password: passwordHash }));
             }))
         } else {
           return throwError('Wrong Credentials');
