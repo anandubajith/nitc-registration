@@ -65,7 +65,7 @@ export class UserController {
     // if ( !!details.oldPassword || !!details.newPassword ) {
     //   throw new HttpException('Invalid login', HttpStatus.UNAUTHORIZED);
     // }
-    this.userService.updatePassword(user.username, details.oldPassword, details.newPassword);
+    return this.userService.updatePassword(user.username, details.oldPassword, details.newPassword);
 
   }
 
