@@ -59,7 +59,8 @@ export class UserController {
   }
 
   @Post('update-password')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.USER, UserRole.FACULTY)
   updatePassword(@CurrentUser() user: User, @Body() details: {oldPassword: string, newPassword: string}) {
     if ( !!details.oldPassword || !!details.newPassword ) {
       throw new HttpException('Invalid login', HttpStatus.UNAUTHORIZED);
