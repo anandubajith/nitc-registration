@@ -52,10 +52,8 @@ export class UserService {
     return this.validateUser(username, oldPassword).pipe(
       switchMap((user: User) => {
         if (user) {
-          console.log("Got user", user.username)
           return this.authService.hashPassword(newPassword)
             .pipe(map(passwordHash => {
-              console.log("newPassword", passwordHash);
               return  from(this.userRepository.update(user.id, { ...user, password: passwordHash }));
             }))
         } else {
