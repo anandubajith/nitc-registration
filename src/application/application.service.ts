@@ -101,7 +101,7 @@ export class ApplicationService {
   }
   findByStatus(status: ApplicationStatus): Observable<Application[]> {
     return from(this.applicationRepository
-      .find({ where: [{ status }], select: ['id', 'submission_date', 'owner' ], relations: ['owner'], order: { submission_date: 'ASC' } }));
+      .find({ where: [{ status }], select: ['id', 'submission_date', 'owner', "verificationStatus" ], relations: ['owner', 'verificationStatus'], order: { submission_date: 'ASC' } }));
   }
 
   findAll(): Observable<Application[]> {
