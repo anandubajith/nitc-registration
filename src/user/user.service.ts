@@ -15,6 +15,7 @@ import { Application } from 'src/application/model/application.interface';
 
 @Injectable()
 export class UserService {
+
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
@@ -42,6 +43,24 @@ export class UserService {
           }),
           catchError(err => throwError(err)),
         );
+      }),
+    );
+  }
+
+  updatePassword(username: string, oldPassword: string, newPassword: string) {
+
+    return this.validateUser(username, oldPassword).pipe(
+      switchMap((user: User) => {
+        if (user) {
+          return this.authService.hashPassword(newPassword)
+            .pipe(map(passwordHash => {
+              return { ...user, password: passwordHash }
+            }), map((user) => {
+              return from(this.userRepository.update(user.id, user));
+            }))
+        } else {
+          return throwError('Wrong Credentials');
+        }
       }),
     );
   }
@@ -78,11 +97,11 @@ export class UserService {
   }
 
   getFaNames(): Observable<String[]> {
-    return from( this.userRepository.find({
-      where: [{ role: UserRole.FACULTY}],
+    return from(this.userRepository.find({
+      where: [{ role: UserRole.FACULTY }],
       select: ['name']
     })).pipe(
-      map( user => {
+      map(user => {
         return user.map(u => u.name);
       })
     )
@@ -168,7 +187,7 @@ export class UserService {
       this.userRepository.findOne(
         { username },
         {
-          select: ['id', 'password', 'name', 'username', 'email', 'role', 'department', 'semester','egrantz', 'profileUpdated', 'faName', 'category', 'contactNumber'],
+          select: ['id', 'password', 'name', 'username', 'email', 'role', 'department', 'semester', 'egrantz', 'profileUpdated', 'faName', 'category', 'contactNumber'],
         },
       ),
     ).pipe(
