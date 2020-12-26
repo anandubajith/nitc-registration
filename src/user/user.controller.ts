@@ -62,9 +62,9 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @hasRoles(UserRole.USER, UserRole.FACULTY)
   updatePassword(@CurrentUser() user: User, @Body() details: {oldPassword: string, newPassword: string}) {
-    if ( !!details.oldPassword || !!details.newPassword ) {
-      throw new HttpException('Invalid login', HttpStatus.UNAUTHORIZED);
-    }
+    // if ( !!details.oldPassword || !!details.newPassword ) {
+    //   throw new HttpException('Invalid login', HttpStatus.UNAUTHORIZED);
+    // }
     this.userService.updatePassword(user.username, details.oldPassword, details.newPassword);
 
   }
