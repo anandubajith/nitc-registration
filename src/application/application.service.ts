@@ -50,10 +50,10 @@ export class ApplicationService {
   }
   getNextStage(stage: ApplicationStatus): ApplicationStatus {
     if (stage == ApplicationStatus.PENDING_SAC) {
-      return ApplicationStatus.PENDING_FA;
-    } else if (stage == ApplicationStatus.PENDING_FA) {
       return ApplicationStatus.PENDING_ACADEMIC;
-    } else if ( stage == ApplicationStatus.PENDING_ACADEMIC) {
+    } else if (stage == ApplicationStatus.PENDING_ACADEMIC) {
+      return ApplicationStatus.PENDING_FA;
+    } else if ( stage == ApplicationStatus.PENDING_FA) {
       return ApplicationStatus.VERIFIED;
     }
     throw Error('Invalid???');
