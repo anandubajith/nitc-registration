@@ -92,7 +92,7 @@ export class ApplicationService {
     ).pipe(
       map((applicationFound: Application) => {
         delete application.id;
-        return { ...applicationFound, ...application, status: ApplicationStatus.PENDING_SAC };
+        return { ...applicationFound, ...application, status: ApplicationStatus.PENDING_SAC , verificationStatus: { ...applicationFound.verificationStatus,  remark: 'pending'}};
       }),
       map((applicationUpdated: Application) => {
         return this.applicationRepository.save(applicationUpdated)
