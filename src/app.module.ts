@@ -16,6 +16,9 @@ import { ApplicationModule } from './application/application.module';
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
+      ssl: {
+        rejectUnauthorized: false,
+      }
     }),
     UserModule,
     AuthModule,
